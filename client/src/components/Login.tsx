@@ -9,7 +9,6 @@ import {
   Box,
   Alert,
 } from '@mui/material';
-import axios from 'axios';
 
 const Login: React.FC = () => {
   const { login } = useContext(AuthContext);
@@ -33,6 +32,7 @@ const Login: React.FC = () => {
       navigate('/chat');
     } catch (err) {
       setError('Invalid credentials. Please try again.');
+      console.log(err)
     }
   };
 
