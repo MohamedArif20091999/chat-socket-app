@@ -42,16 +42,14 @@ const Chat: React.FC = () => {
   const [newSessionName, setNewSessionName] = useState<string>('');
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
-  const socketRef = useRef<Socket | null>(null); // Initialize ref
+  const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
     if (user) {
-      // Initialize socket only once
       socketRef.current = io(import.meta.env.VITE_APP_WEBSOCKET_URL || 'http://localhost:4000', {
         query: { userId: user.user.id },
       });
 
-      // Listen for socket events
       socketRef.current.on('connect', () => {
         console.log('Connected to WebSocket server');
       });
@@ -111,7 +109,7 @@ const Chat: React.FC = () => {
     };
 
     setSessions((prevSessions) => [...prevSessions, newSession]);
-    setCurrentSessionId(newSessionName); // Automatically switch to the new session
+    setCurrentSessionId(newSessionName); 
     handleDialogClose();
   };
 
@@ -123,7 +121,7 @@ const Chat: React.FC = () => {
     const newMessage: Message = {
       sender: 'user',
       message,
-      sessionId: currentSessionId, // Include sessionId
+      sessionId: currentSessionId, 
     };
 
     // Update current session's messages
@@ -140,10 +138,8 @@ const Chat: React.FC = () => {
     );
 
     console.log(currentSessionId, newMessage, "currentSessionId, newMessage");
-    // Emit message to server via socket
     socketRef.current.emit('message', newMessage); // Send message with sessionId
 
-    // Clear input field
     setMessage('');
   };
 
