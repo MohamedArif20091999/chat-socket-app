@@ -9,6 +9,7 @@ import {
   Box,
   Alert,
 } from '@mui/material';
+import axios from 'axios';
 
 const Login: React.FC = () => {
   const { login } = useContext(AuthContext);
@@ -21,7 +22,14 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+    console.log(identifier, password, "login")
       await login(identifier, password);
+      console.log("LOGIN TRIED")
+    //   const response = await axios.post(`${import.meta.env.VITE_APP_STRAPI_API_URL}/auth/local`, {
+    //     identifier,
+    //     password,
+    //   });
+    //   console.log(response.data, "response")
       navigate('/chat');
     } catch (err) {
       setError('Invalid credentials. Please try again.');
@@ -42,12 +50,14 @@ const Login: React.FC = () => {
             fullWidth
             margin="normal"
             value={identifier}
+            size='small'
             onChange={(e) => setIdentifier(e.target.value)}
             required
           />
           <TextField
             label="Password"
             variant="outlined"
+            size='small'
             type="password"
             fullWidth
             margin="normal"

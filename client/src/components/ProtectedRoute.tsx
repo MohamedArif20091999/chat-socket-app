@@ -1,21 +1,21 @@
-import React, { useContext } from 'react';
-import { Route, Navigate, RouteProps } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import React from 'react';
+import {  useNavigate } from 'react-router-dom';
+import Login from './Login';
 
-interface ProtectedRouteProps {
-    component: React.ComponentType<any>;
-  }
-  
-  type Props = ProtectedRouteProps & RouteProps;
 
-const ProtectedRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const { user } = useContext(AuthContext);
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }): JSX.Element => {
 
-  return user ? (
-    <Route {...rest} element={<Component />} />
-  ) : (
-    <Navigate to="/login" />
-  );
+const navigate = useNavigate();
+    if (localStorage.getItem('user')) {
+        return children as JSX.Element;
+       
+      } else if (!localStorage.getItem('user'))  {
+        navigate('/login');
+        return <Login/>
+      }
+
+      return <></>
 };
 
 export default ProtectedRoute;
+

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import io, { Socket } from 'socket.io-client';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -21,6 +22,7 @@ interface Message {
 
 const Chat: React.FC = () => {
   const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [message, setMessage] = useState<string>('');
   const [chat, setChat] = useState<Message[]>(() => {
     const storedChat = localStorage.getItem('chat');
@@ -31,7 +33,7 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      socketRef.current = io(process.env.REACT_APP_WEBSOCKET_URL || 'http://localhost:4000', {
+      socketRef.current = io(import.meta.env.VITE_APP_WEBSOCKET_URL || 'http://localhost:4000', {
         query: { userId: user.user.id },
       });
 
@@ -63,6 +65,7 @@ const Chat: React.FC = () => {
   }, [chat]);
 
   const sendMessage = () => {
+    console.log('Sending message:', message, socketRef.current) ;
     if (socketRef.current && message.trim() !== '') {
       socketRef.current.emit('message', message);
       const newMessage: Message = { sender: 'user', message };
@@ -77,6 +80,7 @@ const Chat: React.FC = () => {
 
   const handleLogout = () => {
     logout();
+    navigate('/login') 
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -92,7 +96,7 @@ const Chat: React.FC = () => {
           <Typography variant="h6" style={{ flexGrow: 1 }}>
             Real-Time Chat
           </Typography>
-          <Button color="inherit" onClick={handleLogout}>
+          <Button color="secondary" onClick={handleLogout}>
             Logout
           </Button>
         </Toolbar>

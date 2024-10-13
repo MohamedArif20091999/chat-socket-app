@@ -43,6 +43,7 @@ const Register: React.FC = () => {
             fullWidth
             margin="normal"
             value={username}
+            size='small'
             onChange={(e) => setUsername(e.target.value)}
             required
           />
@@ -53,6 +54,7 @@ const Register: React.FC = () => {
             fullWidth
             margin="normal"
             value={email}
+            size='small'
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -62,6 +64,7 @@ const Register: React.FC = () => {
             type="password"
             fullWidth
             margin="normal"
+            size = 'small'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

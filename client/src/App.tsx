@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -8,15 +8,19 @@ import './App.css'
 
 function App() {
 
+
   return (
     <AuthProvider>
-    <Router>
-        <ProtectedRoute path="/chat"  component={Chat} />
+    <Routes>
+        {/* Protected Route */}
+        <Route path="/chat" element={ <ProtectedRoute><Chat /></ProtectedRoute> } />
+
+        {/* <ProtectedRoute path="/chat"  component={Chat} /> */}
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
         <Route path="/" element={<Login/>} />
       
-    </Router>
+    </Routes>
   </AuthProvider>
 
   )
