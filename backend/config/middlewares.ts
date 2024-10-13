@@ -7,7 +7,7 @@ export default [
     config: {
       enabled: true,
       header: '*',
-      origin: ['http://localhost:1337']
+      origin: ['https://chat-socket-app-84f4.vercel.app']
     }
   },
 
