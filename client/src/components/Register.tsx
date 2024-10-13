@@ -25,6 +25,7 @@ const Register: React.FC = () => {
       await register(username, email, password);
       navigate('/chat');
     } catch (err) {
+        console.log(err)
       setError('Registration failed. Please try again.');
     }
   };

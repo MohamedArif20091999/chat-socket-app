@@ -9,7 +9,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // Adjust as needed for security
+    origin: '*', 
     methods: ['GET', 'POST']
   }
 });
@@ -17,10 +17,9 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
-  socket.on('message', (msg: string) => {
-    console.log(`Received message from ${socket.id}: ${msg}`);
-    // Echo the message back to the client
-    socket.emit('message', msg);
+  socket.on('message', (msg: any) => {
+    console.log(`Received message from ${socket.id}: ${JSON.stringify(msg)}`);
+    socket.emit('message', {...msg, sender: 'server'} );
   });
 
   socket.on('disconnect', () => {
